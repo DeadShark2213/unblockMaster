@@ -8,47 +8,119 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 100px;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbowBG 10s infinite;
+    }
+
+    @keyframes rainbowBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     #button {
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 20px 40px;
+      font-size: 20px;
       cursor: pointer;
       position: relative;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbowButton 5s infinite;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes rainbowButton {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     #text {
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 32px;
       color: black;
-      opacity: 1;
-      transition: opacity 3s ease;
+      opacity: 0;
       visibility: hidden;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: confettiFall 3s linear infinite;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate3d(0, -100vh, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(0, 100vh, 0) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <button id="button" onclick="handleClick()">Click Me!</button>
-  <div id="text">you're gay</div>
+  <button id="button" onclick="handleClick()">Surprise!</button>
+  <div id="text">You're Gay!</div>
 
   <script>
     function handleClick() {
       const button = document.getElementById('button');
       const text = document.getElementById('text');
 
-      // Move button to the top of the screen and change text
-      button.style.position = 'absolute';
-      button.style.top = '10px';
-      button.style.left = '50%';
-      button.style.transform = 'translateX(-50%)';
-      button.innerText = 'Surprise!';
-
       // Show text and fade it after 3 seconds
       text.style.visibility = 'visible';
+      text.style.opacity = '1';
       setTimeout(() => {
-        text.style.opacity = '0'; // Start the fade-out
+        text.style.opacity = '0'; // Fade-out effect
+        text.style.visibility = 'hidden';
       }, 3000);
+
+      // Create confetti
+      for (let i = 0; i < 100; i++) {
+        createConfetti();
+      }
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      document.body.appendChild(confetti);
+
+      const size = Math.random() * 10 + 5 + 'px';
+      confetti.style.width = size;
+      confetti.style.height = size;
+      confetti.style.backgroundColor = getRandomColor();
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+
+      // Remove confetti after animation
+      setTimeout(() => confetti.remove(), 5000);
+    }
+
+    function getRandomColor() {
+      const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
   </script>
 </body>
