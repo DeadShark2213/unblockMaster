@@ -3,65 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Color</title>
+    <title>Button Example</title>
     <style>
-        body {
-            background-color: #89CFF0; /* Dark Baby Blue */
-        }
-    </style>
-</head>
-<body>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button</title>
-    <style>
-        .button {
-            background-color: #00008b; /* Dark blue color */
-            color: white;
+        .custom-button {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
             padding: 10px 20px;
-            text-align: center;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
         }
-    </style>
-</head>
-<body>
-    <button class="button" onclick="window.location.href='https://neal.fun/'">neal.fun</button>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buttons</title>
-    <style>
-        .button {
-            background-color: #00008b; /* Dark blue color */
+
+        .custom-button:hover {
+            background-color: blue;
             color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
+        }
+
+        .custom-button:active {
+            transform: scale(0.95); /* Optional: Adds a click animation */
         }
     </style>
 </head>
 <body>
-    <button class="button" onclick="window.location.href='https://gnhustgames.github.io/granny/'">granny unblocked</button>
+    <a href="https://skribbl.io/" class="custom-button">Hi</a>
 </body>
 </html>
