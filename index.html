@@ -131,7 +131,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rectangle Button</title>
+  <title>Time Display</title>
+  <style>
+    #timeDisplay {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div id="timeDisplay">Loading time...</div>
+
+  <script>
+    function updateTime() {
+      // Get the current time in Charlotte, NC (Eastern Time)
+      const now = new Date();
+
+      // Convert to UTC and adjust for Eastern Time (-4 or -5 hours)
+      const utcOffset = now.getTimezoneOffset() * 60000; // in milliseconds
+      const easternOffset = 5 * 60 * 60 * 1000; // 5 hours for standard time
+      const easternTime = new Date(now.getTime() + utcOffset - easternOffset);
+
+      // Format the time
+      const hours = easternTime.getHours();
+      const minutes = easternTime.getMinutes();
+      const seconds = easternTime.getSeconds();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+
+      const timeString = `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+
+      // Update the time display
+      document.getElementById('timeDisplay').textContent = `Time in Charlotte: ${timeString}`;
+    }
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+
+    // Initialize the time display
+    updateTime();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games Button</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -139,18 +195,9 @@
       padding: 0;
       height: 100vh;
       overflow: hidden;
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      animation: rainbowBG 10s infinite;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    @keyframes rainbowBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     #gamesButton {
@@ -173,44 +220,71 @@
       background-color: #45a049;
     }
 
-    #otherButton {
-      padding: 20px 40px;
-      font-size: 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 50px;
-      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 400% 400%;
-      animation: rainbowButton 5s infinite;
-      color: white;
+    #timeDisplay {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
       font-weight: bold;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      z-index: 1000;
+      display: none; /* Initially hidden */
     }
 
-    @keyframes rainbowButton {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .blueBackground {
+      background-color: blue;
     }
   </style>
 </head>
 <body>
-  <button id="otherButton">Surprise!</button>
-  <button id="gamesButton" onclick="goToGames()">Games</button>
+  <div id="timeDisplay">Loading time...</div>
+  <button id="gamesButton" onclick="handleGamesClick()">Games</button>
 
   <script>
-    function goToGames() {
-      // Remove the other button
-      const otherButton = document.getElementById('otherButton');
-      if (otherButton) {
-        otherButton.remove();
-      }
+    function updateTime() {
+      // Get the current time in Charlotte, NC (Eastern Time)
+      const now = new Date();
 
-      // Redirect to a new screen (you can replace 'games.html' with your desired URL)
-      setTimeout(() => {
-        window.location.href = 'games.html'; // Replace with your target URL
-      }, 500); // Add a small delay for UX
+      // Convert to UTC and adjust for Eastern Time (-4 or -5 hours)
+      const utcOffset = now.getTimezoneOffset() * 60000; // in milliseconds
+      const easternOffset = 4 * 60 * 60 * 1000; // 4 hours for daylight saving time
+      const easternTime = new Date(now.getTime() + utcOffset - easternOffset);
+
+      // Format the time
+      const hours = easternTime.getHours();
+      const minutes = easternTime.getMinutes();
+      const seconds = easternTime.getSeconds();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+
+      const timeString = `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+
+      // Update the time display
+      document.getElementById('timeDisplay').textContent = `Time in Charlotte: ${timeString}`;
     }
+
+    function handleGamesClick() {
+      // Remove everything except the time
+      const timeDisplay = document.getElementById('timeDisplay');
+      const gamesButton = document.getElementById('gamesButton');
+
+      document.body.innerHTML = ''; // Clear everything on the screen
+      document.body.classList.add('blueBackground'); // Set background color to blue
+
+      // Re-add the time display
+      document.body.appendChild(timeDisplay);
+      timeDisplay.style.display = 'block'; // Show the time display
+    }
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+
+    // Initialize the time display
+    updateTime();
   </script>
 </body>
 </html>
