@@ -131,142 +131,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bubble Button</title>
+  <title>Rectangle Button</title>
   <style>
-    body, html {
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      height: 100vh;
       overflow: hidden;
-      background-color: #f0f0f0;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbowBG 10s infinite;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    body.white {
-      background-color: white;
+    @keyframes rainbowBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    #bubbleButton {
+    #gamesButton {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background-color: white;
-      border: 2px solid black;
-      font-family: Arial, sans-serif;
+      padding: 10px 20px;
       font-size: 16px;
-      font-weight: bold;
-      color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       cursor: pointer;
-      z-index: 3;
-      transition: all 0.5s ease;
-    }
-
-    #bubbleButton.center {
-      bottom: 50%;
-      right: 50%;
-      transform: translate(50%, 50%);
-    }
-
-    .your-straight {
-      position: absolute;
-      top: 40%;
-      font-family: Arial, sans-serif;
-      font-size: 24px;
+      border: none;
+      border-radius: 15px;
+      background-color: #4CAF50;
+      color: white;
       font-weight: bold;
-      text-align: center;
-      color: black;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
     }
 
-    .your-straight.visible {
-      opacity: 1;
+    #gamesButton:hover {
+      background-color: #45a049;
+    }
+
+    #otherButton {
+      padding: 20px 40px;
+      font-size: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 400% 400%;
+      animation: rainbowButton 5s infinite;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes rainbowButton {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-  <div class="your-straight" id="yourStraightText">You're Straight!</div>
-  <button id="bubbleButton">Shh</button>
-  <canvas class="confetti" id="confettiCanvas"></canvas>
+  <button id="otherButton">Surprise!</button>
+  <button id="gamesButton" onclick="goToGames()">Games</button>
 
   <script>
-    const bubbleButton = document.getElementById('bubbleButton');
-    const yourStraightText = document.getElementById('yourStraightText');
-    const confettiCanvas = document.getElementById('confettiCanvas');
-    const ctx = confettiCanvas.getContext('2d');
-    let isWhiteScreen = false;
-
-    // Confetti setup
-    const confettiParticles = [];
-    const colors = ['#FFC0CB', '#FFD700', '#90EE90', '#ADD8E6', '#FF69B4'];
-
-    function createConfetti() {
-      for (let i = 0; i < 200; i++) {
-        confettiParticles.push({
-          x: Math.random() * confettiCanvas.width,
-          y: Math.random() * confettiCanvas.height,
-          size: Math.random() * 7 + 3,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          velocityX: Math.random() * 2 - 1,
-          velocityY: Math.random() * -3 - 1,
-        });
+    function goToGames() {
+      // Remove the other button
+      const otherButton = document.getElementById('otherButton');
+      if (otherButton) {
+        otherButton.remove();
       }
+
+      // Redirect to a new screen (you can replace 'games.html' with your desired URL)
+      setTimeout(() => {
+        window.location.href = 'games.html'; // Replace with your target URL
+      }, 500); // Add a small delay for UX
     }
-
-    function drawConfetti() {
-      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-      confettiParticles.forEach(p => {
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        p.x += p.velocityX;
-        p.y += p.velocityY;
-        if (p.y < 0) p.y = confettiCanvas.height;
-      });
-      requestAnimationFrame(drawConfetti);
-    }
-
-    function resizeCanvas() {
-      confettiCanvas.width = window.innerWidth;
-      confettiCanvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    createConfetti();
-
-    bubbleButton.addEventListener('click', () => {
-      if (!isWhiteScreen) {
-        document.body.classList.add('white');
-        bubbleButton.textContent = 'Yay';
-        bubbleButton.classList.add('center');
-        isWhiteScreen = true;
-      } else {
-        yourStraightText.classList.add('visible');
-        bubbleButton.textContent = '🎉';
-        drawConfetti();
-      }
-    });
   </script>
 </body>
 </html>
