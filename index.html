@@ -3,102 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Example</title>
-    <style>
-        .custom-button {
-            background-color: white;
-            color: black;
-            border: 2px solid black;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 15px; /* Rounded edges */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
-        }
-
-        .custom-button:hover {
-            background-color: blue;
-            color: white;
-        }
-
-        .custom-button:active {
-            transform: scale(0.95); /* Optional: Adds a click animation */
-        }
-    </style>
-</head>
-<body>
-    <a href="https://skribbl.io/" class="custom-button">skribbl.io</a>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Light Blue Background</title>
+    <title>Rainbow Celebration</title>
     <style>
         body {
-            background-color: lightblue; /* Sets the background to light blue */
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif; /* Optional: Adds a clean font */
-        }
-    </style>
-</head>
-<body>
-    <h1>Welcome to Your Light Blue Background!</h1>
-    <p>Enjoy the soothing light blue color for your webpage.</p>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toggle Background Color</title>
-    <style>
-        .toggle-button {
-            background-color: white;
-            color: black;
-            border: 2px solid black;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 15px; /* Rounded edges */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transitions */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400% 400%;
+            animation: rainbow 5s ease infinite;
         }
 
-        .toggle-button:hover {
-            background-color: gray;
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
             color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+            transition: all 0.3s ease;
         }
 
-        .toggle-button:active {
-            transform: scale(0.95); /* Optional: Adds a click animation */
+        button:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 10px black;
+            display: none;
         }
     </style>
-    <script>
-        function toggleBackgroundColor(button) {
-            // Check the current background color of the body
-            if (document.body.style.backgroundColor === "darkblue") {
-                // Change to light blue and update button text
-                document.body.style.backgroundColor = "lightblue";
-                button.textContent = "Dark Blue";
-            } else {
-                // Change to dark blue and update button text
-                document.body.style.backgroundColor = "darkblue";
-                button.textContent = "Light Blue";
-            }
-        }
-    </script>
 </head>
 <body>
-    <button class="toggle-button" onclick="toggleBackgroundColor(this)">Dark Blue</button>
+    <div class="message" id="message">Your Gay!</div>
+    <button id="rainbow-button">Celebrate!</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // Get the button and message elements
+        const button = document.getElementById('rainbow-button');
+        const message = document.getElementById('message');
+
+        // Add a click event listener to the button
+        button.addEventListener('click', () => {
+            // Display the message
+            message.style.display = 'block';
+
+            // Launch rainbow confetti
+            const duration = 3 * 1000; // 3 seconds
+            const end = Date.now() + duration;
+
+            const colors = ['#ff0000', '#ffa500', '#ffff00', '#008000', '#0000ff', '#4b0082', '#ee82ee'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        });
+    </script>
 </body>
 </html>
