@@ -101,6 +101,11 @@
       for (let i = 0; i < 100; i++) {
         createConfetti();
       }
+
+      // Redirect to the link after 6 seconds
+      setTimeout(() => {
+        window.location.href = 'https://www.youtube.com/watch?v=mdUlSd2Md0M';
+      }, 6000);
     }
 
     function createConfetti() {
@@ -123,62 +128,6 @@
       const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
       return colors[Math.floor(Math.random() * colors.length)];
     }
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Time Display</title>
-  <style>
-    #timeDisplay {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 5px 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      z-index: 1000;
-    }
-  </style>
-</head>
-<body>
-  <div id="timeDisplay">Loading time...</div>
-
-  <script>
-    function updateTime() {
-      // Get the current time in Charlotte, NC (Eastern Time)
-      const now = new Date();
-
-      // Convert to UTC and adjust for Eastern Time (-4 or -5 hours)
-      const utcOffset = now.getTimezoneOffset() * 60000; // in milliseconds
-      const easternOffset = 5 * 60 * 60 * 1000; // 5 hours for standard time
-      const easternTime = new Date(now.getTime() + utcOffset - easternOffset);
-
-      // Format the time
-      const hours = easternTime.getHours();
-      const minutes = easternTime.getMinutes();
-      const seconds = easternTime.getSeconds();
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      const formattedHours = hours % 12 || 12; // Convert to 12-hour format
-
-      const timeString = `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
-
-      // Update the time display
-      document.getElementById('timeDisplay').textContent = `Time in Charlotte: ${timeString}`;
-    }
-
-    // Update the time every second
-    setInterval(updateTime, 1000);
-
-    // Initialize the time display
-    updateTime();
   </script>
 </body>
 </html>
