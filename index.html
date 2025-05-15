@@ -51,7 +51,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 32px;
-      color: black;
+      color: black; /* Default color */
       opacity: 0;
       visibility: hidden;
       font-weight: bold;
@@ -90,6 +90,9 @@
       const button = document.getElementById('button');
       const text = document.getElementById('text');
       const audio = document.getElementById('audio');
+
+      // Change text color to white
+      text.style.color = 'white';
 
       // Show text and fade it after 3 seconds
       text.style.visibility = 'visible';
