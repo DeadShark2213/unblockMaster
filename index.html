@@ -83,11 +83,13 @@
 <body>
   <div id="text">You're Gay!</div>
   <button id="button" onclick="handleClick()">Surprise!</button>
+  <audio id="audio" src="Gay Echo Voice TikTok Sound Effect.mp4"></audio>
 
   <script>
     function handleClick() {
       const button = document.getElementById('button');
       const text = document.getElementById('text');
+      const audio = document.getElementById('audio');
 
       // Show text and fade it after 3 seconds
       text.style.visibility = 'visible';
@@ -102,10 +104,8 @@
         createConfetti();
       }
 
-      // Redirect to the link after 6 seconds
-      setTimeout(() => {
-        window.location.href = 'https://www.youtube.com/watch?v=mdUlSd2Md0M';
-      }, 6000);
+      // Play the audio
+      audio.play();
     }
 
     function createConfetti() {
