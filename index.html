@@ -144,7 +144,6 @@
     body {
       min-height: 100vh;
       margin: 0;
-      /* Rainbow background */
       background: linear-gradient(270deg, #ff6ec4, #7873f5, #42e695, #feb47b, #ff6ec4);
       background-size: 1200% 1200%;
       animation: rainbowBG 18s ease infinite;
@@ -155,7 +154,6 @@
       50% {background-position:100% 50%;}
       100% {background-position:0% 50%;}
     }
-
     #rect-btn {
       position: fixed;
       bottom: 32px;
@@ -171,7 +169,11 @@
       cursor: pointer;
       transition: background 0.3s, color 0.3s;
     }
-
+    #rect-btn.white {
+      background: #fff;
+      color: #fff;
+      border: 2px solid #eee;
+    }
     #surprise-btn {
       display: none;
       position: fixed;
@@ -189,7 +191,11 @@
       box-shadow: 0 2px 20px rgba(0,0,0,0.18);
       transition: background 0.3s, color 0.3s;
     }
-
+    #surprise-btn.white {
+      background: #fff;
+      color: #fff;
+      border: 2px solid #eee;
+    }
     #result-text {
       display: none;
       position: fixed;
@@ -198,8 +204,25 @@
       transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
-      color: #ff6ec4;
-      text-shadow: 0 2px 10px #fff, 0 2px 16px #ff6ec433;
+      color: #fff;
+      text-shadow: 0 2px 10px #ff6ec4, 0 2px 16px #ff6ec433, 0 0 4px #000;
+      z-index: 10;
+    }
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 18px;
+      border-radius: 4px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.8;
+      animation: confetti-fall 1.8s linear forwards;
+    }
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.7;
+      }
     }
   </style>
 </head>
@@ -215,24 +238,46 @@
     const yaySound = document.getElementById('yay-sound');
     const body = document.body;
 
+    // Helper to launch confetti
+    function launchConfetti() {
+      const colors = ['#ff6ec4','#7873f5','#42e695','#feb47b','#fff','#333'];
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.left = `${Math.random()*100}vw`;
+        confetti.style.top = '-30px';
+        confetti.style.transform = `rotate(${Math.random()*360}deg)`;
+        confetti.style.animationDuration = `${1.2 + Math.random()}s`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1800);
+      }
+    }
+
     rectBtn.addEventListener('click', () => {
       // Remove rainbow background, set to white
       body.style.background = "#fff";
       body.style.animation = "none";
-      // Remove this button
-      rectBtn.style.display = "none";
-      // Show new button
-      surpriseBtn.style.display = "block";
+      // Make button white
+      rectBtn.classList.add('white');
+      // After a short delay, show the next button
+      setTimeout(() => {
+        rectBtn.style.display = "none";
+        surpriseBtn.style.display = "block";
+        surpriseBtn.classList.add('white'); // Make the surprise button white
+      }, 400);
     });
 
     surpriseBtn.addEventListener('click', () => {
-      // Show the text on top
+      // Show the text on top in white
       resultText.style.display = "block";
       // Hide the button
       surpriseBtn.style.display = "none";
       // Play the sound
       yaySound.currentTime = 0;
       yaySound.play();
+      // Launch confetti!
+      launchConfetti();
     });
   </script>
 </body>
